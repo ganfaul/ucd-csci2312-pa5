@@ -123,7 +123,7 @@ void test_less_usage(ErrorContext &ec, unsigned int numRuns) {
         }
     }
 }
-
+/*
 // iterator: smoke test
 void test_iterator_smoketest(ErrorContext &ec) {
     bool pass;
@@ -325,3 +325,4 @@ void test_iterator_usage(ErrorContext &ec, unsigned int numRuns) {
         }
     }
 }
+*/
