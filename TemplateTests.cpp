@@ -123,7 +123,7 @@ void test_less_usage(ErrorContext &ec, unsigned int numRuns) {
         }
     }
 }
-/*
+
 // iterator: smoke test
 void test_iterator_smoketest(ErrorContext &ec) {
     bool pass;
@@ -132,7 +132,6 @@ void test_iterator_smoketest(ErrorContext &ec) {
 
     ec.DESC("instantiation, constructor, destructor");
     pass = true;
-
     for (int i = 0; i < 10; i++) {
 
         // mutable object + iterator
@@ -140,7 +139,6 @@ void test_iterator_smoketest(ErrorContext &ec) {
         point3d[0] = 2.3;
         point3d[1] = 3.2;
         point3d[2] = 4.2;
-
         for (fixed_array<double>::iterator it = point3d.begin(); it != point3d.end(); ++it)
             ;
 
@@ -325,4 +323,3 @@ void test_iterator_usage(ErrorContext &ec, unsigned int numRuns) {
         }
     }
 }
-*/

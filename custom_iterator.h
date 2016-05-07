@@ -35,13 +35,27 @@ namespace CS2312 {
             typedef std::forward_iterator_tag iterator_category;
             typedef size_type difference_type;
 
-            iterator(pointer ptr);
-            self_type operator++();
-            self_type operator++(int junk);
-            reference operator*();
-            pointer operator->();
-            bool operator==(const self_type& rhs) const;
-            bool operator!=(const self_type& rhs) const;
+            iterator(pointer ptr) {__ptr = ptr;}
+            self_type operator++() {
+                __ptr++;
+                return *this;
+            }
+            self_type operator++(int junk) {
+                __ptr += junk;
+                return *this;
+            }
+            reference operator*() {
+                return *((*this).__ptr);
+            }
+            pointer operator->() {
+                return (*this).__ptr;
+            }
+            bool operator==(const self_type& rhs) const {
+                return *this == rhs;
+            }
+            bool operator!=(const self_type& rhs) const {
+                return *this != rhs;
+            }
 
         private:
 
@@ -60,13 +74,27 @@ namespace CS2312 {
             typedef std::forward_iterator_tag iterator_category;
             typedef size_type difference_type;
 
-            const_iterator(pointer ptr);
-            self_type operator++();
-            self_type operator++(int junk);
-            const value_type& operator*() const;
-            const value_type* operator->() const;
-            bool operator==(const self_type& rhs) const;
-            bool operator!=(const self_type& rhs) const;
+            const_iterator(pointer ptr) {__ptr = ptr;}
+            self_type operator++() {
+                __ptr++;
+                return *this;
+            }
+            self_type operator++(int junk) {
+                __ptr++;
+                return *this;
+            }
+            const value_type& operator*() const {
+                return *((*this).__ptr);
+            }
+            const value_type* operator->() const {
+                return &*this;
+            }
+            bool operator==(const self_type& rhs) const {
+                return *this == rhs;
+            }
+            bool operator!=(const self_type& rhs) const {
+                return *this != rhs;
+            }
 
         private:
 
@@ -75,25 +103,49 @@ namespace CS2312 {
         };
 
 
-        fixed_array(size_type size);
+        fixed_array(size_type size) {__size = size;}
 
-        fixed_array(std::initializer_list<T> list);
+        fixed_array(std::initializer_list<T> list) {
+            for(auto it = list.begin(); it != list.end(); it++) {
+                *__data = *it;
+                __data++;
+            }
+        }
 
-        ~fixed_array();
+        ~fixed_array() {
+            for(auto it = __data; it != __data + __size; it ++) {
+                delete it;
+            }
+            delete __data;
+        }
 
-        size_type size() const;
+        size_type size() const {
+            return __size;
+        }
 
-        T& operator[](size_type index);
+        T& operator[](size_type index) {
+            return *(__data + index);
+        }
 
-        const T& operator[](size_type index) const;
+        const T& operator[](size_type index) const {
+            return *(__data + index);
+        }
 
-        iterator begin();
+        iterator begin() {
+            return __data;
+        }
 
-        iterator end();
+        iterator end() {
+            return __data + __size;
+        }
 
-        const_iterator begin() const;
+        const_iterator begin() const {
+            return __data;
+        }
 
-        const_iterator end() const;
+        const_iterator end() const {
+            return __data + __size;
+        }
 
     private:
 
