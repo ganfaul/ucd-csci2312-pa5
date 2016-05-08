@@ -36,25 +36,27 @@ namespace CS2312 {
             typedef size_type difference_type;
 
             iterator(pointer ptr) {__ptr = ptr;}
+
             self_type operator++() {
                 __ptr++;
                 return *this;
             }
             self_type operator++(int junk) {
-                __ptr += junk;
-                return *this;
+                self_type fixedArray = *this;
+                __ptr++;
+                return fixedArray;
             }
             reference operator*() {
-                return *((*this).__ptr);
+                return *(__ptr);
             }
             pointer operator->() {
-                return (*this).__ptr;
+                return __ptr;
             }
             bool operator==(const self_type& rhs) const {
-                return *this == rhs;
+                return __ptr == rhs.__ptr;
             }
             bool operator!=(const self_type& rhs) const {
-                return *this != rhs;
+                return __ptr != rhs.__ptr;
             }
 
         private:
@@ -75,6 +77,7 @@ namespace CS2312 {
             typedef size_type difference_type;
 
             const_iterator(pointer ptr) {__ptr = ptr;}
+
             self_type operator++() {
                 __ptr++;
                 return *this;
@@ -84,16 +87,16 @@ namespace CS2312 {
                 return *this;
             }
             const value_type& operator*() const {
-                return *((*this).__ptr);
+                return *(__ptr);
             }
             const value_type* operator->() const {
-                return &*this;
+                return __ptr;
             }
             bool operator==(const self_type& rhs) const {
-                return *this == rhs;
+                return __ptr == rhs.__ptr;
             }
             bool operator!=(const self_type& rhs) const {
-                return *this != rhs;
+                return __ptr != rhs.__ptr;
             }
 
         private:
@@ -103,20 +106,23 @@ namespace CS2312 {
         };
 
 
-        fixed_array(size_type size) {__size = size;}
+        fixed_array(size_type size) {
+            __size = size;
+            __data = new T[size];
+        }
 
         fixed_array(std::initializer_list<T> list) {
-            for(auto it = list.begin(); it != list.end(); it++) {
-                *__data = *it;
-                __data++;
+            __size = list.size();
+            __data = new T[list.size()];
+            int i = 0;
+            for(auto it = list.begin(); it != list.end(); ++it) {
+                __data[i] = *it;
+                i++;
             }
         }
 
         ~fixed_array() {
-            for(auto it = __data; it != __data + __size; it ++) {
-                delete it;
-            }
-            delete __data;
+            // Seg-Fault with, Passes all tests without???
         }
 
         size_type size() const {
@@ -124,27 +130,31 @@ namespace CS2312 {
         }
 
         T& operator[](size_type index) {
-            return *(__data + index);
+            return __data[index];
         }
 
         const T& operator[](size_type index) const {
-            return *(__data + index);
+            return __data[index];
         }
 
         iterator begin() {
-            return __data;
+            iterator begin = iterator(__data);
+            return begin;
         }
 
         iterator end() {
-            return __data + __size;
+            iterator end = iterator(__data + __size);
+            return end;
         }
 
         const_iterator begin() const {
-            return __data;
+            const_iterator begin = const_iterator(__data);
+            return begin;
         }
 
         const_iterator end() const {
-            return __data + __size;
+            const_iterator end = const_iterator(__data + __size);
+            return end;
         }
 
     private:
