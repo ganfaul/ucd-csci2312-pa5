@@ -53,7 +53,7 @@ namespace CS2312 {
                 return __ptr;
             }
             bool operator==(const self_type& rhs) const {
-                return __ptr == rhs.__ptr;
+                return *this == rhs;
             }
             bool operator!=(const self_type& rhs) const {
                 return __ptr != rhs.__ptr;
@@ -93,7 +93,7 @@ namespace CS2312 {
                 return __ptr;
             }
             bool operator==(const self_type& rhs) const {
-                return __ptr == rhs.__ptr;
+                return *this == rhs;
             }
             bool operator!=(const self_type& rhs) const {
                 return __ptr != rhs.__ptr;
